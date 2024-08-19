@@ -4,9 +4,9 @@ import React from "react";
 const page = () => {
   return (
     <div className="w-full flex items-center justify-center flex-col">
-      <div className="">
+      <div className="px-1">
         <div className="flex gap-4 items-center">
-          <span className="text-amber-400 text-3xl font-bold">
+          <span className="text-amber-400 lg:text-3xl text-2xl font-bold">
             Original Website
           </span>
           <svg
@@ -19,7 +19,7 @@ const page = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-trending-up text-red-600 "
+            className="lucide lucide-trending-up text-red-600 w-10"
           >
             <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
             <polyline points="16 7 22 7 22 13" />
@@ -28,7 +28,7 @@ const page = () => {
 
         <a
           href="https://thewebivore.com/understanding-npm-dependency-installation-errors/"
-          className="text-white text-[22.5px] hover:underline"
+          className="text-white text-base lg:text-[22.5px] hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >

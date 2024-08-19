@@ -9,7 +9,7 @@ const BlogCard = ({ title, description, tags, time, links, slug }: any) => {
   return (
     <div className="max-w-3xl bg-black mx-2 p-2 w-full  transition-all duration-300 ease-in-out wave-effect">
       <div className="p-1 px-2">
-        {/* <h1 className="text-gray-400 text-lg pl-14">{time}</h1> */}
+        <h1 className="text-gray-400 text-lg ">{time}</h1>
 
         <div className="flex justify-start items-start">
           {/* <div >
@@ -36,12 +36,12 @@ const BlogCard = ({ title, description, tags, time, links, slug }: any) => {
               <path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" />
             </svg>
           </div> */}
-          <h1 className="text-3xl text-gray-300">{title}</h1>
+          <h1 className="lg:text-3xl text-lg text-gray-300">{title}</h1>
         </div>
         <div className="flex gap-1 mt-5 items-center hover:translate-x-4 transition-all duration-200 ease-in-out">
           <Link
             href={`/blogs/${slug}`}
-            className="text-amber-400 text-xl font-bold hover:underline"
+            className="text-amber-400 lg:text-xl  font-bold hover:underline"
           >
             Read More
           </Link>

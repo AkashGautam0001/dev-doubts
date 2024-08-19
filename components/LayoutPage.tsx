@@ -13,7 +13,7 @@ const LayoutPage = () => {
   }, [pathname]);
 
   return (
-    <div className="flex w-full justify-between items-center max-w-3xl">
+    <div className="flex w-full justify-between items-center lg:max-w-3xl mx-2">
       <div className="flex items-center justify-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const LayoutPage = () => {
           <path d="m12 8-4 4 4 4" />
         </svg>
 
-        <h1 className="text-2xl text-orange-500 tracking-wider">
+        <h1 className="lg:text-2xl hidden lg:block text-orange-500 tracking-wider">
           {route === "/" ? "/home" : route.toLowerCase()}
         </h1>
       </div>
