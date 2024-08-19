@@ -10,6 +10,7 @@ const page = () => {
   return (
     <div className="relative w-full h-3/4 flex flex-col justify-center items-center bg-black space-y-4">
       <BlogCard
+        key={1}
         title="Understanding npm 'Could not resolve dependency' installation errors"
         links="https://thewebivore.com/understanding-npm-dependency-installation-errors/"
         time={currenttime}
@@ -17,6 +18,7 @@ const page = () => {
       />
 
       <BlogCard
+        key={2}
         title="AlternativeTo is a free service that helps you find better alternatives."
         links="https://alternativeto.net/"
         time={currenttime}

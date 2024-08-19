@@ -64,8 +64,8 @@ const BlogCard = ({ title, description, tags, time, links, slug }: any) => {
       </div>
       <div className="h-0.5 bg-gray-500 rounded-full" />
       <div className="flex flex-wrap gap-x-4 mb-2 items-center justify-end ">
-        {["Next.js", "React-Native"].map((tech) => (
-          <TechWrapper tech={tech} />
+        {["Next.js", "React-Native"].map((tech, index) => (
+          <TechWrapper tech={tech} key={index} />
         ))}
       </div>
     </div>
