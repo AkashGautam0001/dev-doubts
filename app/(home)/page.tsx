@@ -1,3 +1,4 @@
+"use client";
 import BlogCard from "@/components/BlogCard";
 import React from "react";
 import ChooseRandom from "@/components/ChooseRandom";
