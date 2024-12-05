@@ -45,10 +45,9 @@ function App() {
     let remainingQuestions = 5;
     const topicQuestions: TopicQuestion[] = selectedTopics.map(
       (topic, index) => {
-        const questions =
-          index === 2
-            ? remainingQuestions
-            : Math.floor(Math.random() * (remainingQuestions - 1)) + 1;
+        const maxQuestions =
+          remainingQuestions - (selectedTopics.length - index - 1);
+        const questions = Math.max(1, Math.floor(Math.random() * maxQuestions));
         remainingQuestions -= questions;
         return { topic, questions };
       }
