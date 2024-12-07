@@ -65,7 +65,9 @@ const CGPACalculator: React.FC = () => {
   return (
     <div className="p-6 min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-purple-700 text-white">
       <h1 className="text-3xl font-bold mb-6">CGPA Calculator</h1>
-
+      <h1 className="text-2xl font-bold mb-6 text-red-500">
+        Only fill those field in which you have SGPA
+      </h1>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-xl space-y-6 text-gray-800">
         {semesters.map((semester, index) => (
           <div key={index} className="flex space-x-4">
