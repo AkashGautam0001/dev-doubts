@@ -1,7 +1,7 @@
 "use client";
 // import BlogCard from "@/components/BlogCard";
 import React from "react";
-import ChooseRandom from "@/components/ChooseRandom";
+import FindResult from "@/components/FindResult";
 
 const page = () => {
   const currenttime = new Date().toLocaleDateString("en-US", {
@@ -27,7 +27,7 @@ const page = () => {
     //     slug={"open source alternative software".split(" ").join("-")}
     //   />
     // </div>
-    <ChooseRandom />
+    <FindResult />
   );
 };
 export default page;
