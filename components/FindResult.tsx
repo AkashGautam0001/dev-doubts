@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 
 interface Semester {
@@ -12,9 +11,12 @@ interface Result {
 }
 
 const CGPACalculator: React.FC = () => {
-  const [semesters, setSemesters] = useState<Semester[]>([
-    { credit: "", sgpa: "" },
-  ]);
+  // Predefined credit points for semesters 1 to 8
+  const predefinedCredits = [20, 20, 22, 21, 22, 21, 18, 18];
+
+  const [semesters, setSemesters] = useState<Semester[]>(
+    predefinedCredits.map((credit) => ({ credit: credit.toString(), sgpa: "" }))
+  );
   const [result, setResult] = useState<Result>({
     cgpa: null,
     percentage: null,
@@ -38,7 +40,8 @@ const CGPACalculator: React.FC = () => {
       const creditNum = parseFloat(credit);
       const sgpaNum = parseFloat(sgpa);
 
-      if (!isNaN(creditNum) && !isNaN(sgpaNum)) {
+      // Ensure SGPA is provided and valid for calculation
+      if (!isNaN(creditNum) && !isNaN(sgpaNum) && sgpa !== "") {
         totalCredits += creditNum;
         totalGradePoints += creditNum * sgpaNum;
       }
@@ -53,7 +56,10 @@ const CGPACalculator: React.FC = () => {
   };
 
   const addSemester = () => {
-    setSemesters([...semesters, { credit: "", sgpa: "" }]);
+    // Limit adding more semesters beyond the predefined list
+    if (semesters.length < predefinedCredits.length) {
+      setSemesters([...semesters, { credit: "", sgpa: "" }]);
+    }
   };
 
   return (
@@ -66,9 +72,9 @@ const CGPACalculator: React.FC = () => {
             <input
               type="number"
               placeholder={`Credits (Sem ${index + 1})`}
-              value={semester.credit}
-              onChange={(e) => handleChange(index, "credit", e.target.value)}
-              className="w-1/2 p-3 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              value={predefinedCredits[index]} // Predefined credit value
+              disabled // Disable editing for credits
+              className="w-1/2 p-3 border rounded-lg shadow-sm bg-gray-200 text-gray-500"
             />
             <input
               type="number"
