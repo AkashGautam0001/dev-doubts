@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface Semester {
   credit: string;
@@ -11,6 +11,7 @@ interface Result {
 }
 
 const CGPACalculator: React.FC = () => {
+  // Predefined credit points for semesters 1 to 8
   const predefinedCredits = [20, 20, 22, 21, 22, 21, 18, 18];
 
   const [semesters, setSemesters] = useState<Semester[]>([]);
@@ -19,20 +20,6 @@ const CGPACalculator: React.FC = () => {
     percentage: null,
   });
   const [isCalculated, setIsCalculated] = useState(false);
-  const [clickCount, setClickCount] = useState(0);
-
-  // Load click count from localStorage on component mount
-  useEffect(() => {
-    const storedClickCount = localStorage.getItem("clickCount");
-    if (storedClickCount) {
-      setClickCount(parseInt(storedClickCount, 10));
-    }
-  }, []);
-
-  // Update localStorage whenever clickCount changes
-  useEffect(() => {
-    localStorage.setItem("clickCount", clickCount.toString());
-  }, [clickCount]);
 
   const handleChange = (
     index: number,
@@ -52,6 +39,7 @@ const CGPACalculator: React.FC = () => {
       const creditNum = parseFloat(credit);
       const sgpaNum = parseFloat(sgpa);
 
+      // Ensure SGPA is provided and valid for calculation
       if (!isNaN(creditNum) && !isNaN(sgpaNum) && sgpa !== "") {
         totalCredits += creditNum;
         totalGradePoints += creditNum * sgpaNum;
@@ -64,8 +52,7 @@ const CGPACalculator: React.FC = () => {
     const percentage = parseFloat((cgpa * 10).toFixed(2));
 
     setResult({ cgpa, percentage });
-    setIsCalculated(true);
-    incrementClickCount(); // Increment click count for calculating CGPA
+    setIsCalculated(true); // Mark as calculated to hide inputs
   };
 
   const addSemester = () => {
@@ -74,25 +61,31 @@ const CGPACalculator: React.FC = () => {
         ...semesters,
         { credit: predefinedCredits[semesters.length].toString(), sgpa: "" },
       ]);
-      incrementClickCount(); // Increment click count for adding a semester
     }
   };
 
   const refreshForm = () => {
     setSemesters([]);
     setResult({ cgpa: null, percentage: null });
-    setIsCalculated(false);
-    incrementClickCount(); // Increment click count for refreshing
-  };
-
-  const incrementClickCount = () => {
-    setClickCount((prevCount) => prevCount + 1);
+    setIsCalculated(false); // Reset calculation state
   };
 
   return (
     <div className="p-6 min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-purple-700 text-white">
       <h1 className="text-3xl font-bold mb-6">CGPA Calculator</h1>
-
+      <p className="mb-4 text-yellow-500">
+        (CGPA is calculated using the guidance of latest AKTU B.tech ordinance
+        2018-19){" "}
+        <a
+          href="https://aktu.ac.in/bachelors-ordinance.html"
+          className="underline font-bold"
+        >
+          Check
+        </a>
+      </p>
+      <h6 className="mb-4 text-red-500">
+        Only fill those fields in which you have SGPA.
+      </h6>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-xl space-y-6 text-gray-800">
         {semesters.map((semester, index) => (
           <div
@@ -102,8 +95,8 @@ const CGPACalculator: React.FC = () => {
             <input
               type="number"
               placeholder={`Credits (Sem ${index + 1})`}
-              value={predefinedCredits[index]}
-              disabled
+              value={predefinedCredits[index]} // Predefined credit value
+              disabled // Disable editing for credits
               className="w-1/2 p-3 border rounded-lg shadow-sm bg-gray-200 text-gray-500"
             />
             <input
@@ -146,19 +139,17 @@ const CGPACalculator: React.FC = () => {
         </div>
       )}
 
-      {/* Interaction Count Display */}
-      <div className="mt-6 text-center text-lg font-medium text-gray-800">
-        <p className="mb-4">
-          Total Interactions:{" "}
-          <span className="font-bold text-yellow-500">{clickCount}</span>
-        </p>
-        <button
-          onClick={refreshForm}
-          className="py-3 px-8 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold rounded-lg shadow-md hover:from-red-600 hover:to-orange-600 transition"
-        >
-          Refresh
-        </button>
-      </div>
+      {/* Message and Refresh Button */}
+      {isCalculated && (
+        <div className="mt-6 text-center text-lg font-medium text-gray-800">
+          <button
+            onClick={refreshForm}
+            className="py-3 px-8 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold rounded-lg shadow-md hover:from-red-600 hover:to-orange-600 transition"
+          >
+            Refresh
+          </button>
+        </div>
+      )}
     </div>
   );
 };
