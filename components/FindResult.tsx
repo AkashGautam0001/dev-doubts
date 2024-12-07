@@ -21,6 +21,7 @@ const CGPACalculator: React.FC = () => {
     cgpa: null,
     percentage: null,
   });
+  const [isCalculated, setIsCalculated] = useState(false);
 
   const handleChange = (
     index: number,
@@ -53,6 +54,7 @@ const CGPACalculator: React.FC = () => {
     const percentage = parseFloat((cgpa * 10).toFixed(2));
 
     setResult({ cgpa, percentage });
+    setIsCalculated(true); // Mark as calculated to hide inputs
   };
 
   const addSemester = () => {
@@ -62,15 +64,28 @@ const CGPACalculator: React.FC = () => {
     }
   };
 
+  const refreshForm = () => {
+    // Reset the form
+    setSemesters(
+      predefinedCredits.map((credit) => ({
+        credit: credit.toString(),
+        sgpa: "",
+      }))
+    );
+    setResult({ cgpa: null, percentage: null });
+    setIsCalculated(false); // Reset calculation state
+  };
+
   return (
     <div className="p-6 min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-purple-700 text-white">
       <h1 className="text-3xl font-bold mb-6">CGPA Calculator</h1>
-      <h1 className="text-2xl font-bold mb-6 text-red-500">
-        Only fill those field in which you have SGPA
-      </h1>
+
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-xl space-y-6 text-gray-800">
         {semesters.map((semester, index) => (
-          <div key={index} className="flex space-x-4">
+          <div
+            key={index}
+            className={`flex space-x-4 ${isCalculated ? "hidden" : ""}`}
+          >
             <input
               type="number"
               placeholder={`Credits (Sem ${index + 1})`}
@@ -88,12 +103,14 @@ const CGPACalculator: React.FC = () => {
           </div>
         ))}
 
-        <button
-          onClick={addSemester}
-          className="w-full py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-green-500 hover:to-blue-600 transition"
-        >
-          Add Semester
-        </button>
+        {!isCalculated && (
+          <button
+            onClick={addSemester}
+            className="w-full py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-green-500 hover:to-blue-600 transition"
+          >
+            Add Semester
+          </button>
+        )}
       </div>
 
       <button
@@ -113,6 +130,21 @@ const CGPACalculator: React.FC = () => {
             <span className="text-green-500 font-bold">Percentage:</span>{" "}
             {result.percentage}%
           </p>
+        </div>
+      )}
+
+      {/* Message and Refresh Button */}
+      {isCalculated && (
+        <div className="mt-6 text-center text-lg font-medium text-gray-800">
+          <p className="mb-4 text-yellow-500">
+            Only fill those fields in which you have SGPA.
+          </p>
+          <button
+            onClick={refreshForm}
+            className="py-3 px-8 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold rounded-lg shadow-md hover:from-red-600 hover:to-orange-600 transition"
+          >
+            Refresh
+          </button>
         </div>
       )}
     </div>
