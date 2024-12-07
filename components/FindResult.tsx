@@ -14,9 +14,7 @@ const CGPACalculator: React.FC = () => {
   // Predefined credit points for semesters 1 to 8
   const predefinedCredits = [20, 20, 22, 21, 22, 21, 18, 18];
 
-  const [semesters, setSemesters] = useState<Semester[]>(
-    predefinedCredits.map((credit) => ({ credit: credit.toString(), sgpa: "" }))
-  );
+  const [semesters, setSemesters] = useState<Semester[]>([]);
   const [result, setResult] = useState<Result>({
     cgpa: null,
     percentage: null,
@@ -58,20 +56,16 @@ const CGPACalculator: React.FC = () => {
   };
 
   const addSemester = () => {
-    // Limit adding more semesters beyond the predefined list
     if (semesters.length < predefinedCredits.length) {
-      setSemesters([...semesters, { credit: "", sgpa: "" }]);
+      setSemesters([
+        ...semesters,
+        { credit: predefinedCredits[semesters.length].toString(), sgpa: "" },
+      ]);
     }
   };
 
   const refreshForm = () => {
-    // Reset the form
-    setSemesters(
-      predefinedCredits.map((credit) => ({
-        credit: credit.toString(),
-        sgpa: "",
-      }))
-    );
+    setSemesters([]);
     setResult({ cgpa: null, percentage: null });
     setIsCalculated(false); // Reset calculation state
   };
@@ -79,7 +73,9 @@ const CGPACalculator: React.FC = () => {
   return (
     <div className="p-6 min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-purple-700 text-white">
       <h1 className="text-3xl font-bold mb-6">CGPA Calculator</h1>
-
+      <p className="mb-4 text-yellow-500">
+        Only fill those fields in which you have SGPA.
+      </p>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-xl space-y-6 text-gray-800">
         {semesters.map((semester, index) => (
           <div
@@ -136,9 +132,6 @@ const CGPACalculator: React.FC = () => {
       {/* Message and Refresh Button */}
       {isCalculated && (
         <div className="mt-6 text-center text-lg font-medium text-gray-800">
-          <p className="mb-4 text-yellow-500">
-            Only fill those fields in which you have SGPA.
-          </p>
           <button
             onClick={refreshForm}
             className="py-3 px-8 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold rounded-lg shadow-md hover:from-red-600 hover:to-orange-600 transition"
