@@ -74,8 +74,18 @@ const CGPACalculator: React.FC = () => {
     <div className="p-6 min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-purple-700 text-white">
       <h1 className="text-3xl font-bold mb-6">CGPA Calculator</h1>
       <p className="mb-4 text-yellow-500">
-        Only fill those fields in which you have SGPA.
+        (CGPA is calculated using the guidance of latest AKTU B.tech ordinance
+        2018-19){" "}
+        <a
+          href="https://aktu.ac.in/bachelors-ordinance.html"
+          className="underline font-bold"
+        >
+          Check
+        </a>
       </p>
+      <h6 className="mb-4 text-red-500">
+        Only fill those fields in which you have SGPA.
+      </h6>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-xl space-y-6 text-gray-800">
         {semesters.map((semester, index) => (
           <div
